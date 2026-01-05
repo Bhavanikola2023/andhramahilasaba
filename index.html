@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Toolkit - B.Com Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .progress-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .progress-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .progress-item:hover {
+            background: #e8edff;
+            transform: translateX(5px);
+        }
+
+        .progress-item.completed {
+            background: #d4edda;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-height: 500px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .job-card {
+            background: linear-gradient(135deg, #f5f7ff 0%, #fff 100%);
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .salary {
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .prompt-box {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .prompt-box pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 10px 0;
+            background: #f8f9ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .checklist li:hover {
+            background: #e8edff;
+            transform: translateX(5px);
+        }
+
+        .checklist li:before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+            border-left: 5px solid #ffa726;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success-story h3 {
+            color: #f57c00;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .accordion {
+            margin: 20px 0;
+        }
+
+        .accordion-item {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .accordion-header {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: #764ba2;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+            padding: 20px;
+        }
+
+        .tool-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .tool-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .link-button {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .link-button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .progress-items {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .footer p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd54f 0%, #ffeb3b 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 AI Career Toolkit for B.Com Students</h1>
+            <p>Your Free 24/7 Career Coach</p>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-bar">
+            <h3>📊 Your Progress Today</h3>
+            <div class="progress-items">
+                <div class="progress-item" onclick="toggleProgress(this)">
+                    <input type="checkbox" class="checkbox">
+                    <span>Created AI Account</span>
+                </div>
+                <div class="progress-item" onclick="toggleProgress(this)">
+                    <input type="checkbox" class="checkbox">
+                    <span>Made Resume</span>
+                </div>
+                <div class="progress-item" onclick="toggleProgress(this)">
+                    <input type="checkbox" class="checkbox">
+                    <span>Applied to 5 Jobs</span>
+                </div>
+                <div class="progress-item" onclick="toggleProgress(this)">
+                    <input type="checkbox" class="checkbox">
+                    <span>Learned New Skill</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showPage('page1')">🏠 Start Here</button>
+            <button class="tab" onclick="showPage('page2')">💼 Get a Job</button>
+            <button class="tab" onclick="showPage('page3')">📚 Learn & Earn</button>
+            <button class="tab" onclick="showPage('page4')">🛠️ AI Tools</button>
+            <button class="tab" onclick="showPage('page5')">📋 Prompts</button>
+            <button class="tab" onclick="showPage('page6')">⭐ Success Stories</button>
+            <button class="tab" onclick="showPage('page7')">❓ Help</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Page 1: Start Here -->
+            <div id="page1" class="page active">
+                <div class="section">
+                    <h2>Welcome! 👋</h2>
+                    <p style="font-size: 1.1em; line-height: 1.8;">
+                        This website is your personal career assistant - available 24/7, <span class="highlight">completely FREE</span>.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        You don't need expensive courses. You don't need special connections. You already have what you need: 
+                        a phone or computer with internet, and the determination to build a better future.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>⏰ Your First Hour Action Plan</h2>
+                    <p style="margin-bottom: 20px;"><strong>Do these 4 things TODAY:</strong></p>
+                    
+                    <div class="job-card">
+                        <h3>☐ STEP 1: Create Your Free AI Account (5 minutes)</h3>
+                        <p>Go to <strong>chatgpt.com</strong> and click "Sign up"</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Use your email or Google account</li>
+                            <li>No payment needed - keep it FREE</li>
+                            <li>Works on phone and computer</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Alternative:</strong> gemini.google.com (Google's AI tool)</p>
+                        <a href="https://chatgpt.com" target="_blank" class="link-button">Open ChatGPT →</a>
+                    </div>
+
+                    <div class="job-card">
+                        <h3>☐ STEP 2: Make Your Resume (20 minutes)</h3>
+                        <ul style="margin-left: 20px;">
+                            <li>Go to "Get a Job" tab above</li>
+                            <li>Copy the resume prompt</li>
+                            <li>Paste in ChatGPT with your details</li>
+                            <li>Download and save</li>
+                        </ul>
+                    </div>
+
+                    <div class="job-card">
+                        <h3>☐ STEP 3: Apply to 5 Jobs (30 minutes)</h3>
+                        <p><strong>Where to search:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Naukri.com</li>
+                            <li>LinkedIn Jobs (mobile app)</li>
+                            <li>Indeed India</li>
+                            <li>Internshala</li>
+                            <li>Local Facebook job groups</li>
+                        </ul>
+                    </div>
+
+                    <div class="job-card">
+                        <h3>☐ STEP 4: Learn One Skill Today (5 minutes)</h3>
+                        <p>Ask ChatGPT:</p>
+                        <div class="prompt-box" style="margin-top: 10px;">
+                            <button class="copy-btn" onclick="copyPrompt(this, 'prompt1')">Copy</button>
+                            <pre id="prompt1">Teach me one useful Excel formula for accounting jobs and explain with example</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>✨ Why AI Will Help You Get a Job</h2>
+                    <ul class="checklist">
+                        <li><strong>Write professional resumes</strong> in minutes (not hours)</li>
+                        <li><strong>Apply to more jobs</strong> faster (10 applications in 30 minutes)</li>
+                        <li><strong>Learn new skills</strong> free (Excel, Tally, English, anything)</li>
+                        <li><strong>Practice interviews</strong> anytime (AI gives instant feedback)</li>
+                        <li><strong>Look professional</strong> even with limited experience</li>
+                    </ul>
+                    <div class="tip-box">
+                        <strong>Remember:</strong> Employers hire people who show initiative and professionalism. AI helps you show both.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 2: Get a Job Fast -->
+            <div id="page2" class="page">
+                <div class="section">
+                    <h2>💼 3 Jobs You Can Get in 30 Days</h2>
+
+                    <div class="job-card">
+                        <h3><span class="emoji">📊</span>JOB 1: Accounting Assistant / Junior Accountant</h3>
+                        <div class="salary">₹12,000 - ₹20,000/month</div>
+                        <p><strong>What you'll do:</strong> Data entry, invoice processing, basic bookkeeping</p>
+                        <p><strong>Skills needed:</strong> Basic Excel, Tally (can learn in 2 weeks)</p>
+                        <p><strong>Where to apply:</strong> Naukri, LinkedIn, local CA firms</p>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>How AI Helps:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Learn Tally from ChatGPT (free tutor)</li>
+                                <li>Practice Excel formulas</li>
+                                <li>Write professional job applications</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <h3><span class="emoji">📞</span>JOB 2: Customer Service / Sales Support</h3>
+                        <div class="salary">₹15,000 - ₹25,000/month</div>
+                        <p><strong>What you'll do:</strong> Answer customer queries, email support, phone calls</p>
+                        <p><strong>Skills needed:</strong> Good communication, basic computer skills</p>
+                        <p><strong>Where to apply:</strong> LinkedIn, Indeed, company websites</p>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>How AI Helps:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Practice professional English</li>
+                                <li>Prepare for customer scenarios</li>
+                                <li>Write follow-up emails</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <h3><span class="emoji">💻</span>JOB 3: Freelance Services (Side Income)</h3>
+                        <div class="salary">₹5,000 - ₹30,000/month (part-time)</div>
+                        <p><strong>What you can offer:</strong> Data entry, bookkeeping, content writing, social media</p>
+                        <p><strong>Skills needed:</strong> Basic computer skills + willingness to learn</p>
+                        <p><strong>Where to start:</strong> Fiverr, Upwork, Freelancer.com</p>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>How AI Helps:</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>Create service descriptions</li>
+                                <li>Communicate with clients</li>
+                                <li>Learn skills on-demand</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📝 Create Your Resume</h2>
+                    <p style="margin-bottom: 20px;">Copy this prompt, fill in YOUR details, paste in ChatGPT:</p>
+                    
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="copyPrompt(this, 'resumePrompt')">Copy</button>
+                        <pre id="resumePrompt">I am a [1st year / 2nd year / 3rd year] B.Com student from [Your College Name] in [Your City]. 
+
+My details:
+- Percentage/CGPA: [Your marks]
+- Subjects I'm good at: [Accounting / Finance / Business Studies / etc.]
+- Computer skills: [MS Office / Excel / Tally / Basic / None]
+- Languages: [Hindi, English, other languages you speak]
+- Any internship or part-time work: [Yes - describe / No]
+- Other skills or activities: [Sports / NSS / College events / anything]
+
+Create a professional, ATS-friendly resume for me targeting [accounting assistant / data entry / customer service / sales] positions. Make it impressive even though I have limited experience. Format it clearly with proper sections.</pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>Pro Tips for Your Resume:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Keep it to 1 page</li>
+                            <li>Use simple, clear language</li>
+                            <li>Highlight your B.Com knowledge</li>
+                            <li>Mention any computer skills (even basic)</li>
+                            <li>Include languages you speak</li>
+                            <li>Add your mobile number and professional email</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🎯 Interview Preparation</h2>
+                    <h3>Practice with AI Interview Coach</h3>
+                    <p>Use this prompt in ChatGPT:</p>
+                    
+                    <div class="prompt-box">
+                        <button class="copy-btn" onclick="copyPrompt(this, 'interviewPrompt')">Copy</button>
+                        <pre id="interviewPrompt">I have a job interview for [job title] position. Please:
+1. Act as the interviewer
+2. Ask me common interview questions one at a time
+3. Wait for my answer
+4. Give me feedback on how to improve my answer
+5. Suggest better ways to phrase my responses
+
+Let's start with the first question.</pre>
+                    </div>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Question 1: "Tell me about yourself"</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>❌ BAD Answer:</strong> "I am studying B.Com. I need a job."</p>
+                                <p style="margin-top: 15px;"><strong>✅ GOOD Answer:</strong></p>
+                                <p>"I am a [year] B.Com student from [college]. I am particularly interested in [accounting/finance], and I've been developing my skills in [Excel/Tally/communication]. I'm looking for an opportunity where I can apply my academic knowledge while learning from experienced professionals. I'm a quick learner and very dedicated to growing in this field."</p>
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Ask ChatGPT:</strong> "Create a 'Tell me about yourself' answer for me based on my background: [describe yourself briefly]"
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Question 2: "Why should we hire you?"</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Your Approach:</strong></p>
+                                <ul style="margin-left: 20px;">
+                                    <li>Focus on your willingness to learn</li>
+                                    <li>Mention your B.Com knowledge</li>
+                                    <li>Show enthusiasm and reliability</li>
+                                </ul>
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Ask ChatGPT:</strong> "Help me answer 'Why should we hire you' for [job title] position. My strengths are: [list 2-3 things]"
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Question 3: "What are your strengths?"</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Good Strengths to Mention:</strong></p>
+                                <ul style="margin-left: 20px;">
+                                    <li>Quick learner</li>
+                                    <li>Good with numbers</li>
+                                    <li>Reliable and punctual</li>
+                                    <li>Team player</li>
+                                    <li>Good communication skills</li>
+                                    <li>Attention to detail</li>
+                                </ul>
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Ask ChatGPT:</strong> "Give me specific examples to support my strength of [choose one strength] for an interview"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Learn & Earn -->
+            <div id="page3" class="page">
+                <div class="section">
+                    <h2>📚 30-Day Skill Building Plan</h2>
+                    <p style="margin-bottom: 20px;"><strong>Goal:</strong> Make yourself more valuable to employers in just 30 days</p>
+
+                    <div class="grid-2">
+                        <div class="tool-card">
+                            <h3>Week 1: Excel Basics</h3>
+                            <p><strong>Why Excel?</strong> Required for almost every office job</p>
+                            <div class="prompt-box" style="margin-top: 15px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'excelPrompt')">Copy</button>
+                                <pre id="excelPrompt">Teach me these Excel formulas with simple examples:
+- SUM
+- AVERAGE
+- COUNT
+I am a complete beginner.</pre>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Week 2: Tally Prime Basics</h3>
+                            <p><strong>Why Tally?</strong> Used by most Indian businesses for accounting</p>
+                            <div class="prompt-box" style="margin-top: 15px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'tallyPrompt')">Copy</button>
+                                <pre id="tallyPrompt">Explain Tally Prime software to a B.Com student. What is it used for? What are the basic features I should learn first? Explain in simple language.</pre>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Week 3: Business English</h3>
+                            <p><strong>Why English?</strong> Better English = Better jobs and higher salary</p>
+                            <div class="prompt-box" style="margin-top: 15px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'englishPrompt')">Copy</button>
+                                <pre id="englishPrompt">I need to improve my professional email writing. Give me:
+1. Email writing rules
+2. Common templates
+3. 5 practice scenarios where I write emails and you correct them</pre>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Week 4: GST Basics</h3>
+                            <p><strong>Why GST?</strong> Required knowledge for accounting jobs</p>
+                            <div class="prompt-box" style="margin-top: 15px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'gstPrompt')">Copy</button>
+                                <pre id="gstPrompt">Explain GST (Goods and Services Tax) to a B.Com student:
+1. What is GST?
+2. Types of GST (CGST, SGST, IGST)
+3. How is it calculated?
+4. Basic GST entries in accounting
+
+Use simple language and Indian business examples.</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>💰 Freelance Opportunities</h2>
+                    <h3>Services You Can Offer on Fiverr/Upwork:</h3>
+
+                    <div class="grid-2">
+                        <div class="job-card">
+                            <h3>1. Data Entry</h3>
+                            <p><strong>Starting rate:</strong> ₹500-1000 per project</p>
+                            <p><strong>Tools needed:</strong> Excel, attention to detail</p>
+                            <div class="prompt-box" style="margin-top: 10px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'dataEntryPrompt')">Copy</button>
+                                <pre id="dataEntryPrompt">How to start data entry freelancing?</pre>
+                            </div>
+                        </div>
+
+                        <div class="job-card">
+                            <h3>2. Basic Bookkeeping</h3>
+                            <p><strong>Starting rate:</strong> ₹1000-3000 per month per client</p>
+                            <p><strong>Tools needed:</strong> Tally, Excel</p>
+                            <div class="prompt-box" style="margin-top: 10px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'bookkeepingPrompt')">Copy</button>
+                                <pre id="bookkeepingPrompt">What do small businesses need in bookkeeping?</pre>
+                            </div>
+                        </div>
+
+                        <div class="job-card">
+                            <h3>3. Content Writing</h3>
+                            <p><strong>Starting rate:</strong> ₹200-500 per article</p>
+                            <p><strong>Tools needed:</strong> Good writing + ChatGPT to improve</p>
+                            <div class="prompt-box" style="margin-top: 10px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'writingPrompt')">Copy</button>
+                                <pre id="writingPrompt">How to write blog articles for businesses?</pre>
+                            </div>
+                        </div>
+
+                        <div class="job-card">
+                            <h3>4. Social Media Management</h3>
+                            <p><strong>Starting rate:</strong> ₹2000-5000 per month per client</p>
+                            <p><strong>Tools needed:</strong> Canva, basic social media knowledge</p>
+                            <div class="prompt-box" style="margin-top: 10px;">
+                                <button class="copy-btn" onclick="copyPrompt(this, 'socialMediaPrompt')">Copy</button>
+                                <pre id="socialMediaPrompt">What does a social media manager do?</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>How to Start Freelancing:</strong>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Choose ONE service (start small, master one thing first)</li>
+                            <li>Create profile on Fiverr or Upwork</li>
+                            <li>Price low initially (get your first 5 clients, build reviews)</li>
+                            <li>Deliver excellent work (use AI to help you do better work faster)</li>
+                            <li>Increase rates (after good reviews)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: AI Tools -->
+            <div id="page4" class="page">
+                <div class="section">
+                    <h2>🛠️ Essential AI Tools (All FREE)</h2>
+
+                    <div class="tool-card">
+                        <h3><span class="emoji">🤖</span>ChatGPT</h3>
+                        <p><strong>Website:</strong> chatgpt.com</p>
+                        <p><strong>Cost:</strong> FREE (don't pay for anything)</p>
+                        <p style="margin-top: 10px;"><strong>What It Does:</strong> Your personal assistant for EVERYTHING:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Write resumes, cover letters, emails</li>
+                            <li>Learn any skill (Excel, Tally, English, Accounting)</li>
+                            <li>Practice interviews</li>
+                            <li>Solve problems</li>
+                            <li>Explain concepts</li>
+                            <li>Create study plans</li>
+                        </ul>
+                        <div class="tip-box" style="margin-top: 15px;">
+                            <strong>Pro Tips:</strong> Be specific in your questions • Ask for examples • Request step-by-step explanations • Say "explain in simple language" if it's too complicated
+                        </div>
+                        <a href="https://chatgpt.com" target="_blank" class="link-button">Open ChatGPT →</a>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3><span class="emoji">🔍</span>Google Gemini</h3>
+                        <p><strong>Website:</strong> gemini.google.com</p>
+                        <p><strong>Cost:</strong> FREE</p>
+                        <p style="margin-top: 10px;"><strong>What It Does:</strong> Similar to ChatGPT, another AI assistant. Good backup option.</p>
+                        <p style="margin-top: 10px;"><strong>Why Have Both?</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>If one is not working, use the other</li>
+                            <li>Sometimes one explains better than the other</li>
+                            <li>Both are completely free</li>
+                        </ul>
+                        <a href="https://gemini.google.com" target="_blank" class="link-button">Open Gemini →</a>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3><span class="emoji">💼</span>LinkedIn</h3>
+                        <p><strong>Website:</strong> linkedin.com</p>
+                        <p><strong>Cost:</strong> FREE (ignore Premium)</p>
+                        <p style="margin-top: 10px;"><strong>Why You Need It:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Most companies post jobs here</li>
+                            <li>Recruiters search for candidates</li>
+                            <li>Shows you're serious about career</li>
+                            <li>Learn from professionals</li>
+                            <li>Free courses available</li>
+                        </ul>
+                        <div class="prompt-box" style="margin-top: 15px;">
+                            <button class="copy-btn" onclick="copyPrompt(this, 'linkedinPrompt')">Copy</button>
+                            <pre id="linkedinPrompt">Help me create a professional LinkedIn profile. I am a B.Com [year] student from [city].
+
+My details:
+- College: [name]
+- Skills: [list]
+- Looking for: [type of jobs]
+
+Write:
+1. Headline (below my name)
+2. About section
+3. How to describe my education
+4. What skills to add</pre>
+                        </div>
+                        <a href="https://linkedin.com" target="_blank" class="link-button">Open LinkedIn →</a>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3><span class="emoji">🎨</span>Canva</h3>
+                        <p><strong>Website:</strong> canva.com</p>
+                        <p><strong>Cost:</strong> FREE (don't pay for Pro)</p>
+                        <p style="margin-top: 10px;"><strong>What It Does:</strong> Design anything professionally:</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Resumes</li>
+                            <li>Business cards</li>
+                            <li>Certificates</li>
+                            <li>Social media posts</li>
+                            <li>Presentations</li>
+                            <li>Invoices</li>
+                        </ul>
+                        <a href="https://canva.com" target="_blank" class="link-button">Open Canva →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 5: Prompts -->
+            <div id="page5" class="page">
+                <div class="section">
+                    <h2>📋 Ready-to-Use Prompts</h2>
+                    <p style="margin-bottom: 20px;">Just copy, fill in the [ ] brackets with your details, and paste in ChatGPT!</p>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>🔍 Find Right Jobs for You</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'findJobsPrompt')">Copy</button>
+                                    <pre id="findJobsPrompt">I am a [1st/2nd/3rd year] B.Com student in [city]. 
+
+My skills: [List what you know - even if basic]
+My interests: [Accounting / Sales / Customer service / etc.]
+
+Give me:
+1. List of 10 job titles I should search for
+2. Where to find these jobs in India
+3. Which jobs pay best for freshers
+4. Which jobs have most openings right now</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>✉️ Write Cover Letter</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'coverLetterPrompt')">Copy</button>
+                                    <pre id="coverLetterPrompt">Write a professional cover letter for this job:
+
+Job Title: [Copy from job posting]
+Company: [Company name]
+Location: [City]
+
+About me:
+- B.Com [year] student from [college]
+- Key strengths: [List 2-3 things]
+- Why I want this job: [Your reason]
+
+Keep it to 3 short paragraphs. Make me sound professional and enthusiastic.</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>🎯 Customize Resume for Specific Job</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'customizeResumePrompt')">Copy</button>
+                                    <pre id="customizeResumePrompt">Here is my current resume: [Paste your resume]
+
+I am applying for: [Job title at Company name]
+
+Their job requirements are: [Copy key requirements from job posting]
+
+Rewrite my resume to match this job better. Emphasize relevant skills and experience.</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>📚 Learn New Skill from Scratch</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'learnSkillPrompt')">Copy</button>
+                                    <pre id="learnSkillPrompt">I want to learn [Excel / Tally / GST / Business English / etc.] from complete beginner level.
+
+Create a 7-day learning plan for me:
+- What to learn each day
+- Simple explanations
+- Practice exercises
+- Real-world examples from Indian business
+
+Start with Day 1 now.</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>💡 Understand Difficult Concept</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'conceptPrompt')">Copy</button>
+                                    <pre id="conceptPrompt">I am studying [subject] in B.Com. I don't understand [specific topic / concept / chapter].
+
+Please explain it to me:
+1. In very simple language first
+2. With a real-world example from daily life
+3. Then with proper business/accounting example
+4. Give me 3 practice questions to test my understanding
+
+Topic: [Your topic]</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>💼 Create Freelance Service Description</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'freelancePrompt')">Copy</button>
+                                    <pre id="freelancePrompt">I want to offer [service name like data entry / bookkeeping / content writing] on Fiverr/Upwork.
+
+Help me create:
+1. Service title (catchy but professional)
+2. Service description (what I'll do)
+3. What to charge (beginner rates in India)
+4. How to stand out from competition
+
+My background: B.Com student, [mention relevant skills]</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>🚀 Career Path Exploration</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'careerPathPrompt')">Copy</button>
+                                    <pre id="careerPathPrompt">I am a B.Com student interested in [mention interest - accounting / finance / sales / entrepreneurship / not sure].
+
+Help me understand:
+1. What career options exist for me in India?
+2. Which jobs pay well long-term?
+3. What skills should I develop?
+4. What's the realistic path from where I am now to a good career?</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>🆘 EMERGENCY: Quick Resume Needed</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'emergencyResumePrompt')">Copy</button>
+                                    <pre id="emergencyResumePrompt">URGENT: I need a resume in the next 30 minutes for [job title].
+
+My details:
+- Name: [Your name]
+- B.Com [year] from [college]
+- Marks: [Your percentage/CGPA]
+- Skills: [List quickly]
+- Contact: [Phone, email]
+
+Create a simple, professional resume NOW. I'll format it later.</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>🆘 EMERGENCY: Same-Day Interview Help</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="prompt-box">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'emergencyInterviewPrompt')">Copy</button>
+                                    <pre id="emergencyInterviewPrompt">EMERGENCY: I have an interview TODAY for [job title] in [hours] hours.
+
+Quick help needed:
+1. Most common questions for this job
+2. Best answers I can give (I'm B.Com student, limited experience)
+3. Questions I should ask them
+4. One confidence tip
+
+Keep answers SHORT. I need to prepare fast.</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-box" style="margin-top: 30px;">
+                        <h3>💡 How to Use These Prompts Effectively</h3>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Find the right prompt for your need</li>
+                            <li>Click the "Copy" button</li>
+                            <li>Fill in the bracketed [ ] parts with YOUR information</li>
+                            <li>Paste into ChatGPT or Google Gemini</li>
+                            <li>Read the response</li>
+                            <li>Ask follow-up questions if needed</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 6: Success Stories -->
+            <div id="page6" class="page">
+                <div class="section">
+                    <h2>⭐ Real Students Who Used AI to Get Jobs</h2>
+
+                    <div class="success-story">
+                        <h3>Story 1: Priya from Pune (Data Entry → Jr. Accountant)</h3>
+                        <p><strong>Background:</strong> 2nd year B.Com, no work experience, weak English</p>
+                        <p style="margin-top: 10px;"><strong>How AI Helped:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Used ChatGPT to practice English writing daily (30 mins)</li>
+                            <li>Created professional resume with AI help</li>
+                            <li>Applied to 50 jobs in 2 weeks using AI-written applications</li>
+                            <li>Practiced interviews with ChatGPT</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Result:</strong> Got data entry job at ₹12,000/month in week 3. Used AI to learn Tally during work hours. After 4 months, promoted to Jr. Accountant at ₹18,000/month.</p>
+                        <div class="tip-box" style="margin-top: 10px;">
+                            <strong>Her Tip:</strong> "Don't wait until you're perfect. Apply to jobs while learning. AI helps you look professional even when you're still learning."
+                        </div>
+                    </div>
+
+                    <div class="success-story">
+                        <h3>Story 2: Rahul from Lucknow (No job → Freelancer)</h3>
+                        <p><strong>Background:</strong> 3rd year B.Com, family pressure to earn, limited English</p>
+                        <p style="margin-top: 10px;"><strong>How AI Helped:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Asked ChatGPT: "What services can I offer with basic B.Com knowledge?"</li>
+                            <li>Learned Excel formulas with AI tutor in 2 weeks</li>
+                            <li>Created Fiverr profile with AI-written description</li>
+                            <li>Used AI to communicate with international clients</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Result:</strong> Started with ₹500 per project for data entry. Now earns ₹15,000-25,000/month freelancing part-time while studying. Has 50+ completed projects.</p>
+                        <div class="tip-box" style="margin-top: 10px;">
+                            <strong>His Tip:</strong> "I was scared my English wasn't good enough. But ChatGPT helps me write professional messages to clients. They don't know it's my first language."
+                        </div>
+                    </div>
+
+                    <div class="success-story">
+                        <h3>Story 3: Anjali from Jaipur (Failed Interviews → Got Job)</h3>
+                        <p><strong>Background:</strong> Final year B.Com, applied to 30 jobs, rejected from all interviews</p>
+                        <p><strong>Problem:</strong> Got very nervous in interviews, couldn't answer questions well</p>
+                        <p style="margin-top: 10px;"><strong>How AI Helped:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Used ChatGPT as practice interviewer every day for 2 weeks</li>
+                            <li>Practiced same questions 20+ times until confident</li>
+                            <li>Got feedback on her answers</li>
+                            <li>Learned to structure responses properly</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Result:</strong> Next interview, stayed calm and answered confidently. Got offered ₹16,000/month customer service role. Now training new employees.</p>
+                        <div class="tip-box" style="margin-top: 10px;">
+                            <strong>Her Tip:</strong> "Practice with AI is private. You can make mistakes without anyone judging you. Do it 100 times if needed until you feel confident."
+                        </div>
+                    </div>
+
+                    <div class="success-story">
+                        <h3>Story 4: Mohammad from Hyderabad (College Dropout → Business Owner)</h3>
+                        <p><strong>Background:</strong> Dropped out of B.Com after 1st year due to financial problems, needed to earn immediately</p>
+                        <p style="margin-top: 10px;"><strong>How AI Helped:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Asked ChatGPT: "What business can I start with ₹5,000?"</li>
+                            <li>Learned basic bookkeeping from AI</li>
+                            <li>Started offering accounting services to small shops</li>
+                            <li>Used AI to create professional invoices and documents</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Result:</strong> Started with 2 small shop clients at ₹2,000/month each. After 8 months, has 15 clients earning ₹40,000/month. Hired his friend to help.</p>
+                        <div class="tip-box" style="margin-top: 10px;">
+                            <strong>His Tip:</strong> "You don't need a degree to serve local businesses. Learn with AI, start small, deliver good work. Word spreads fast."
+                        </div>
+                    </div>
+
+                    <div class="success-story">
+                        <h3>Story 5: Sneha from Indore (Traditional Family → Independent)</h3>
+                        <p><strong>Background:</strong> 2nd year B.Com, family wanted arranged marriage, she wanted career first</p>
+                        <p style="margin-top: 10px;"><strong>How AI Helped:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Used AI to learn advanced Excel (pivot tables, complex formulas)</li>
+                            <li>Took AI-guided 30-day skill building challenge</li>
+                            <li>Built portfolio of practice projects with AI help</li>
+                            <li>Used AI to negotiate salary professionally</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Result:</strong> Got job at ₹22,000/month in small accounting firm. Impressed manager with Excel skills. Family proud, marriage talks postponed. Planning CA after B.Com.</p>
+                        <div class="tip-box" style="margin-top: 10px;">
+                            <strong>Her Tip:</strong> "When you have real skills, people respect you. AI made me skilled faster than any course could. It's like having a personal mentor for free."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🎯 Common Patterns in Success Stories</h2>
+                    <ul class="checklist">
+                        <li><strong>They didn't wait to be perfect</strong> - Started applying/working while still learning</li>
+                        <li><strong>They used AI as a daily tool</strong> - Not just once, but every day for different needs</li>
+                        <li><strong>They practiced specifically</strong> - Not generic learning, but focused on what they needed</li>
+                        <li><strong>They started small</strong> - Low-paying jobs → Better opportunities OR Small clients → More clients</li>
+                        <li><strong>They were consistent</strong> - 30 mins daily with AI made huge difference</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="quote">
+                        "Every job rejection is practice for the acceptance that's coming."
+                    </div>
+                    <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
+                        <strong>You have advantages they didn't:</strong>
+                    </p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Free AI tools that act as personal coach</li>
+                        <li>Internet access to learn anything</li>
+                        <li>This website with ready-to-use resources</li>
+                        <li>Knowledge that others have succeeded from your position</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page 7: Help & Troubleshooting -->
+            <div id="page7" class="page">
+                <div class="section">
+                    <h2>❓ Common Problems & Solutions</h2>
+
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 1: ChatGPT Not Working</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Symptoms:</strong> Website not loading, says "at capacity", slow responses</p>
+                                <p style="margin-top: 10px;"><strong>Solutions:</strong></p>
+                                <ol style="margin-left: 20px;">
+                                    <li>Refresh the page and try again</li>
+                                    <li>Try different browser (Chrome / Firefox)</li>
+                                    <li>Clear browser cache</li>
+                                    <li>Use Google Gemini instead (gemini.google.com)</li>
+                                    <li>Try in private/incognito browser window</li>
+                                    <li>Check if your internet is working</li>
+                                    <li>Try after 30 minutes (might be temporary)</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 2: No Job Responses</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>You've applied to 20-30 jobs, zero responses</strong></p>
+                                <p style="margin-top: 10px;"><strong>Possible Reasons & Fixes:</strong></p>
+                                
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Reason 1: Resume not good</strong>
+                                    <p>Solution: Show your resume to ChatGPT and ask: "Review my resume and tell me what's wrong. How can I make it better?"</p>
+                                </div>
+
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Reason 2: Applying to wrong jobs</strong>
+                                    <p>Solution: Ask AI: "I'm B.Com [year] with [skills]. What jobs am I actually qualified for right now?"</p>
+                                </div>
+
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Reason 3: Not enough applications</strong>
+                                    <p>Solution: 20-30 is still small number. Try 50-100. Numbers matter.</p>
+                                </div>
+
+                                <div class="warning-box" style="margin-top: 15px;">
+                                    <strong>Action Plan:</strong>
+                                    <ul style="margin-left: 20px;">
+                                        <li>Improve resume with AI help</li>
+                                        <li>Apply to 10 jobs daily for next 2 weeks</li>
+                                        <li>Include different job titles</li>
+                                        <li>Try different job portals</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 3: Failed Interviews</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>You're getting interviews but not offers</strong></p>
+                                <p style="margin-top: 10px;"><strong>Common Mistakes:</strong></p>
+                                
+                                <ul style="margin-left: 20px; margin-top: 10px;">
+                                    <li><strong>Too nervous / Not confident</strong>
+                                        <br>Solution: Practice with AI 30 mins daily for 1 week</li>
+                                    <li><strong>Not answering questions properly</strong>
+                                        <br>Solution: Use STAR method. Ask AI to help structure your answers</li>
+                                    <li><strong>Not researching company</strong>
+                                        <br>Solution: Ask AI: "Tell me about [company name] and what I should know for interview"</li>
+                                    <li><strong>Bad first impression</strong>
+                                        <br>Solution: Dress formally, reach early, smile, firm handshake</li>
+                                </ul>
+
+                                <div class="prompt-box" style="margin-top: 15px;">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'feedbackPrompt')">Copy</button>
+                                    <pre id="feedbackPrompt">I had an interview for [job] and didn't get it. 
+
+They asked me: [list questions you remember]
+I answered: [how you answered]
+
+What did I do wrong? How should I answer these questions better?</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 4: English is Weak</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>You understand but can't speak/write well</strong></p>
+                                
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Daily Practice (30 minutes):</strong>
+                                    <p style="margin-top: 10px;"><strong>Day 1-10: Writing practice</strong></p>
+                                    <div class="prompt-box" style="margin-top: 10px;">
+                                        <button class="copy-btn" onclick="copyPrompt(this, 'writingPracticePrompt')">Copy</button>
+                                        <pre id="writingPracticePrompt">Let's practice English writing. Give me 5 sentences to complete about my daily life. Check my grammar and improve my sentences.</pre>
+                                    </div>
+
+                                    <p style="margin-top: 15px;"><strong>Day 11-20: Conversation practice</strong></p>
+                                    <div class="prompt-box" style="margin-top: 10px;">
+                                        <button class="copy-btn" onclick="copyPrompt(this, 'conversationPracticePrompt')">Copy</button>
+                                        <pre id="conversationPracticePrompt">Have a conversation with me in simple English. Ask me about my day, studies, and goals. Correct my responses and suggest better ways to say things.</pre>
+                                    </div>
+                                </div>
+
+                                <div class="warning-box" style="margin-top: 15px;">
+                                    <strong>Reality Check:</strong> Your English doesn't have to be perfect. It has to be understandable. Many successful people have average English but good skills.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 5: Can't Afford Computer/Laptop</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>You only have smartphone</strong></p>
+                                
+                                <div class="tip-box">
+                                    <strong>Good News: That's enough!</strong>
+                                    <p style="margin-top: 10px;"><strong>Everything Works on Phone:</strong></p>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>ChatGPT (website or browser)</li>
+                                        <li>Google Gemini (website)</li>
+                                        <li>LinkedIn (app)</li>
+                                        <li>Naukri (app)</li>
+                                        <li>Indeed (app)</li>
+                                        <li>Canva (app)</li>
+                                        <li>Google Docs/Sheets (app)</li>
+                                    </ul>
+                                </div>
+
+                                <p style="margin-top: 15px;"><strong>Tips for Phone-Only Users:</strong></p>
+                                <ul style="margin-left: 20px;">
+                                    <li>Use Docs app to create resume (free)</li>
+                                    <li>Apply to jobs through mobile apps</li>
+                                    <li>Practice Excel on Google Sheets app</li>
+                                    <li>Use Canva mobile app for professional documents</li>
+                                    <li>Save important documents in Google Drive</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 6: Family Pressure for Quick Job</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>Family needs you to earn immediately</strong></p>
+                                
+                                <div class="grid-2" style="margin-top: 15px;">
+                                    <div class="tip-box">
+                                        <strong>Track 1: IMMEDIATE (Earning in 1-2 weeks)</strong>
+                                        <ul style="margin-left: 20px; margin-top: 10px;">
+                                            <li>Data entry jobs (low pay but fast to get)</li>
+                                            <li>Part-time/gig work</li>
+                                            <li>Freelance simple tasks (Fiverr)</li>
+                                            <li>Local shop accounting/help</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="warning-box">
+                                        <strong>Track 2: BETTER FUTURE (While doing Track 1)</strong>
+                                        <ul style="margin-left: 20px; margin-top: 10px;">
+                                            <li>Keep applying to better jobs</li>
+                                            <li>Learn skills in evening</li>
+                                            <li>Build experience</li>
+                                            <li>Prepare for growth</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="quote" style="margin-top: 20px;">
+                                    "I'm doing [immediate work] to help now. But I'm also preparing for better opportunity. Give me 3-6 months."
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 7: Losing Motivation</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p><strong>You're tired of trying</strong></p>
+                                
+                                <div class="tip-box">
+                                    <strong>Ask Yourself:</strong>
+                                    <ol style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Have I really tried? (50+ applications? Daily practice?)</li>
+                                        <li>Am I doing things right? (Ask AI to review your approach)</li>
+                                        <li>Am I giving it enough time? (Job search takes 1-3 months typically)</li>
+                                    </ol>
+                                </div>
+
+                                <div class="warning-box" style="margin-top: 15px;">
+                                    <strong>Reset Plan:</strong>
+                                    <ul style="margin-left: 20px;">
+                                        <li>Take 2 days off (complete break)</li>
+                                        <li>Day 3: Start fresh with new strategy</li>
+                                        <li>Ask AI: "I'm struggling with job search. Help me create new plan."</li>
+                                    </ul>
+                                </div>
+
+                                <div class="quote" style="margin-top: 20px;">
+                                    Write down: "I want a job because ___________"
+                                    <br>Read this when demotivated.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span>Problem 8: Scam Job Offers ⚠️</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="warning-box">
+                                    <strong>Warning Signs:</strong>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Asking for money upfront</li>
+                                        <li>Too good to be true salary</li>
+                                        <li>Interview via WhatsApp only</li>
+                                        <li>No proper company website</li>
+                                        <li>Pressure to join immediately</li>
+                                        <li>Vague job description</li>
+                                    </ul>
+                                </div>
+
+                                <div class="tip-box" style="margin-top: 15px;">
+                                    <strong>Safe Practices:</strong>
+                                    <ul style="margin-left: 20px;">
+                                        <li>Research company on Google</li>
+                                        <li>Check company reviews</li>
+                                        <li>Never pay for job</li>
+                                        <li>Ask for office address</li>
+                                        <li>Speak to HR on call</li>
+                                        <li>Trust your instincts</li>
+                                    </ul>
+                                </div>
+
+                                <div class="prompt-box" style="margin-top: 15px;">
+                                    <button class="copy-btn" onclick="copyPrompt(this, 'scamCheckPrompt')">Copy</button>
+                                    <pre id="scamCheckPrompt">I got a job offer from [company name] for [job] at ₹[salary]. They want [details].
+
+Does this sound legitimate or like a scam? What should I verify?</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📞 Emergency Contacts</h2>
+                    <div class="tool-card">
+                        <h3>Mental Health Support (if feeling overwhelmed)</h3>
+                        <p><strong>iCall:</strong> 9152987821 (Free counseling)</p>
+                        <p><strong>Vandrevala Foundation:</strong> 1860-2662-345</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Remember: You Are Not Alone</strong></p>
+            <p>Thousands of B.Com students face same challenges. Many succeeded. You can too.</p>
+            <p style="margin-top: 15px; font-size: 1.2em; color: #667eea;">
+                <strong>Your future self will thank you for starting today. 💪</strong>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Copy Prompt Function
+        function copyPrompt(button, promptId) {
+            const promptText = document.getElementById(promptId).textContent;
+            navigator.clipboard.writeText(promptText).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('span:last-child');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.textContent = '▼';
+            } else {
+                // Close all other accordions
+                const allContents = document.querySelectorAll('.accordion-content');
+                const allArrows = document.querySelectorAll('.accordion-header span:last-child');
+                allContents.forEach(c => c.classList.remove('active'));
+                allArrows.forEach(a => a.textContent = '▼');
+                
+                // Open this accordion
+                content.classList.add('active');
+                arrow.textContent = '▲';
+            }
+        }
+
+        // Progress Tracker
+        function toggleProgress(item) {
+            const checkbox = item.querySelector('.checkbox');
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                item.classList.add('completed');
+            } else {
+                item.classList.remove('completed');
+            }
+            
+            // Save to localStorage
+            saveProgress();
+        }
+
+        // Save Progress to localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('.progress-item .checkbox');
+            const progress = Array.from(checkboxes).map(cb => cb.checked);
+            localStorage.setItem('bcomProgress', JSON.stringify(progress));
+        }
+
+        // Load Progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('bcomProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                const items = document.querySelectorAll('.progress-item');
+                progress.forEach((checked, index) => {
+                    if (checked && items[index]) {
+                        const checkbox = items[index].querySelector('.checkbox');
+                        checkbox.checked = true;
+                        items[index].classList.add('completed');
+                    }
+                });
+            }
+        }
+
+        // Load progress on page load
+        window.addEventListener('load', loadProgress);
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
